@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Success Starts Here</title>
+<style>
+:root{--bg:#0a0a0a;--card:#151515;--gold:#d4af37;--green:#90ee90;--txt:#f2f2f2;--mut:#8a8a8a;--line:#2a2a2a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;line-height:1.4}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid var(--gold);padding-bottom:14px;flex-wrap:wrap;text-align:center}
+header h2{margin:0;font-size:clamp(16px,3.5vw,24px);color:var(--gold);flex:1;min-width:140px}
+.cap{font-size:54px;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+.btn{background:var(--card);color:var(--gold);border:1.5px solid var(--gold);border-radius:10px;padding:10px 16px;font-size:15px;cursor:pointer;transition:.2s;font-family:inherit}
+.btn:hover{background:var(--gold);color:#000}
+.main-btn{width:100%;margin-top:18px;font-size:18px;font-weight:700}
+#panel{display:none;margin-top:10px;gap:10px;flex-direction:column}
+#panel.open{display:flex}
+#panel input{background:#000;border:1px solid var(--line);color:var(--txt);padding:10px;border-radius:10px;font-size:15px;font-family:inherit}
+.opt{opacity:0;transform:translateY(-10px);animation:in .4s forwards;text-align:start;font-weight:600}
+.opt.t1{background:#000;color:var(--gold);border-color:var(--gold)}
+.opt.t2{background:var(--gold);color:#000;border-color:var(--gold)}
+.opt.t3{background:var(--green);color:#000;border-color:var(--green)}
+@keyframes in{to{opacity:1;transform:none}}
+.note{color:var(--mut);font-size:13px;margin:6px 0 0}
+.bar{display:flex;align-items:center;justify-content:space-between;margin:26px 0 8px;color:var(--green);font-weight:700;gap:8px;flex-wrap:wrap}
+.bar .nav button{background:none;border:1px solid var(--green);color:var(--green);border-radius:8px;padding:4px 12px;cursor:pointer;font-size:16px}
+.row{display:flex;gap:10px;align-items:center;margin:8px 0}
+.lab{flex:0 0 32%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;justify-content:space-between;align-items:center;gap:6px;min-width:0}
+.lab b{color:var(--green);margin-inline-end:6px}
+.lab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lab button{background:none;border:0;color:var(--mut);cursor:pointer;font-size:18px}
+.days{flex:1;display:flex;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 8px;gap:4px}
+.d{width:clamp(30px,8.5vw,46px);aspect-ratio:1;border-radius:50%;border:2px solid var(--gold);background:transparent;color:var(--gold);font-weight:700;cursor:pointer;transition:.2s;font-family:inherit}
+.d.on{background:var(--gold);color:#000;transform:scale(1.06)}
+.d.t3.on{background:var(--green);border-color:var(--green)}
+.d.today{box-shadow:0 0 0 3px #ffffff33}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
+.card h4{margin:0 0 4px;color:var(--green)}
+svg text{fill:var(--mut);font-size:11px;font-family:inherit}
+.scroll{overflow-x:auto}
+footer{margin-top:34px;border-top:2px solid var(--gold);padding-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--mut)}
+footer strong{color:var(--gold)}
+.langs{display:flex;gap:8px}
+.langs button{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.langs button.on{border-color:var(--gold);color:var(--gold)}
+.empty{color:var(--mut);text-align:center;padding:18px}
+.banner{text-align:center;font-size:12px;letter-spacing:3px;color:var(--gold);font-weight:700;margin-bottom:6px}
+.saved{display:block;text-align:center;font-size:12px;color:var(--green);opacity:.5;transition:.3s;margin-bottom:8px}
+.cat-h{margin:16px 0 4px;padding:6px 12px;background:#1d1a0d;border-inline-start:3px solid var(--gold);color:var(--gold);font-weight:700;font-size:14px;border-radius:6px}
+.row.out{animation:out .35s forwards}
+@keyframes out{to{opacity:0;transform:translateX(-50px)}}
+.pbar{height:10px;background:#2a2a2a;border-radius:99px;overflow:hidden;margin:8px 0}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--green));transition:width .4s}
+.mini{display:flex;gap:6px;align-items:flex-end;height:70px}
+.mini div{flex:1;text-align:center;font-size:11px;color:var(--mut)}
+.mini i{display:block;width:100%;background:var(--gold);border-radius:5px 5px 0 0;min-height:3px;transition:height .4s}
+.d.fut{opacity:.3;cursor:default}
+.stats{display:flex;gap:10px;margin:8px 0}
+.stat{flex:1;background:#000;border:1px solid var(--line);border-radius:8px;padding:10px;text-align:center}
+.stat small{color:var(--mut)}
+.stat p{margin:4px 0 0;font-size:22px;font-weight:700;color:var(--gold)}
+@media(max-width:560px){.row{flex-direction:column;align-items:stretch}.lab{flex:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="banner">ABDELHAK FIQHI</div>
+<span class="saved" id="saved"></span>
+<header>
+  <h2 id="hFr">Votre Succès commence ici !</h2>
+  <div class="cap">🎓</div>
+  <h2 id="hEn">Your Success Starts Here!</h2>
+</header>
+
+<div id="warn" style="display:none;background:#3a1020;border:1px solid #ef476f;color:#ffc2dc;border-radius:10px;padding:8px;font-size:13px;margin-top:12px;text-align:center">⚠️ Storage unavailable (private mode?) — use 💾 Backup.</div>
+<button class="btn main-btn" id="create"></button>
+<div id="panel"></div>
+
+<div class="bar">
+  <span id="streakT"></span>
+  <span class="nav"><button id="prev">‹</button> <span id="wlabel"></span> <button id="next">›</button></span>
+</div>
+<div id="rows"></div>
+<div class="card" style="margin-top:12px"><div style="display:flex;justify-content:space-between;align-items:baseline"><b id="pct" style="font-size:26px;color:var(--gold)">0%</b><small id="cnt" style="color:var(--mut)"></small></div><div class="pbar"><i id="pfill"></i></div><div class="mini" id="mini"></div></div>
+
+<div class="charts" id="wcharts"></div>
+
+<div class="bar">
+  <span id="monthT"></span>
+  <span class="nav"><button id="mprev">‹</button> <span id="mlabel"></span> <button id="mnext">›</button></span>
+</div>
+<div class="card scroll" id="mchart"></div>
+<div class="card" style="margin-top:12px"><h4 id="statT"></h4><div class="stats"><div class="stat"><small id="s1l"></small><p id="s1">0</p></div><div class="stat"><small id="s2l"></small><p id="s2">0%</p></div></div><div id="donut"></div></div>
+<button class="btn main-btn" id="reset" style="color:#ef476f;border-color:#ef476f;font-size:15px"></button>
+<button class="btn main-btn" id="bk" style="font-size:15px"></button>
+<div id="bkp" style="display:none"><textarea id="bkt" rows="5" style="width:100%;background:#000;color:#f2f2f2;border:1px solid #2a2a2a;border-radius:10px;padding:8px;margin-top:8px"></textarea><div style="display:flex;gap:8px;margin-top:8px"><button class="btn" id="bke" style="flex:1"></button><button class="btn" id="bki" style="flex:1"></button></div></div>
+
+<footer>
+  <div>Created by <strong>ABDELHAK FIQHI</strong><br>Terms Reserved © 2026.</div>
+  <div class="langs"><button data-l="ar">AR</button><button data-l="fr">FR</button><button data-l="en">EN</button></div>
+</footer>
+</div>
+
+<script>
+const T={
+ fr:{create:"Créer de nouvelles choses",t1:"Étude / Examens / Exercices",t2:"Habitudes / Apprendre des compétences",t3:"Objectif personnel",ph:"Nom (facultatif)",streak:"Série de la semaine",month:"Somme mensuelle",week:"Semaine",inf:"Nombre de * = ∞ « infini » — de ** = ∞ — de *** = ∞",empty:"Rien encore. Clique sur « Créer de nouvelles choses ».",n:"Nombre de",days:"Jours de la semaine",def:["Étude","Habitude","Objectif"]},
+ en:{create:"Create new things",t1:"Study / Exams / Exercises",t2:"Habits / Learn Skills",t3:"Personal Goal",ph:"Name (optional)",streak:"Streak week",month:"Monthly sum",week:"Week",inf:"Number of * = ∞ “infinite” — of ** = ∞ — of *** = ∞",empty:"Nothing yet. Click “Create new things”.",n:"Number of",days:"Week days",def:["Study","Habit","Goal"]},
+ ar:{create:"إنشاء أشياء جديدة",t1:"الدراسة / الامتحانات / التمارين",t2:"العادات / تعلم المهارات",t3:"هدف شخصي",ph:"الاسم (اختياري)",streak:"سلسلة الأسبوع",month:"المجموع الشهري",week:"الأسبوع",inf:"عدد * = ∞ «لا نهاية» — عدد ** = ∞ — عدد *** = ∞",empty:"لا شيء بعد. اضغط على «إنشاء أشياء جديدة».",n:"عدد",days:"أيام الأسبوع",def:["دراسة","عادة","هدف"]}
+};
+const COL=["#d4af37","#90ee90","#ffffff"];
+const X={
+ fr:{stat:"📊 Domination par catégorie",tot:"Total validé",rate:"Réussite",reset:"Réinitialiser le mois",conf:"Confirmer ? (clique encore)",cat:["📚 Études & Examens","⚡ Habitudes & Compétences","🎯 Objectifs perso"],saved:"● Sauvegardé auto"},
+ en:{stat:"📊 Domination by category",tot:"Total done",rate:"Success rate",reset:"Reset the month",conf:"Confirm? (click again)",cat:["📚 Study & Exams","⚡ Habits & Skills","🎯 Personal goals"],saved:"● Auto-saved"},
+ ar:{stat:"📊 الهيمنة حسب الفئة",tot:"المجموع المنجز",rate:"نسبة النجاح",reset:"إعادة تعيين الشهر",conf:"تأكيد؟ (اضغط مرة أخرى)",cat:["📚 الدراسة والامتحانات","⚡ العادات والمهارات","🎯 أهداف شخصية"],saved:"● حفظ تلقائي"}
+};
+for(const l in X)X[l].cat=[1,2,3].map(t=>T[l]["t"+t]);
+function streak(id){let d=new Date();d.setHours(0,0,0,0);let n=0;if(!S.checks[id+"|"+key(d)])d.setDate(d.getDate()-1);while(S.checks[id+"|"+key(d)]){n++;d.setDate(d.getDate()-1)}return n}
+function weekSum(dates){
+ const n=S.items.length;let tot=0;
+ const per=dates.map(d=>{const c=S.items.filter(i=>S.checks[i.id+"|"+key(d)]).length;tot+=c;return c});
+ const poss=n*7,pc=Math.round(tot/Math.max(poss,1)*100);
+ $("pct").textContent=pc+"%";$("cnt").textContent=tot+" / "+poss;$("pfill").style.width=pc+"%";
+ $("mini").innerHTML=dates.map((d,i)=>`<div><i style="height:${Math.round(per[i]/Math.max(n,1)*50)+3}px"></i>${dletter(d)}</div>`).join("");
+}
+function monthPrefix(){const n=new Date(),d=new Date(n.getFullYear(),n.getMonth()+mOff,1);return{d,p:d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"}}
+function stats(){
+ const L=X[S.lang],{d,p}=monthPrefix();
+ const c=[0,0,0];let tot=0;
+ S.items.forEach(it=>{Object.keys(S.checks).forEach(k=>{if(k.startsWith(it.id+"|"+p)){c[it.t-1]++;tot++}})});
+ const dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+ const B={fr:["💾 Sauvegarde","Exporter","Importer"],en:["💾 Backup","Export","Import"],ar:["💾 نسخة احتياطية","تصدير","استيراد"]}[S.lang];$("bk").textContent=B[0];$("bke").textContent=B[1];$("bki").textContent=B[2];
+ $("statT").textContent=L.stat;$("s1l").textContent=L.tot;$("s2l").textContent=L.rate;$("reset").textContent=L.reset;$("saved").textContent=L.saved;
+ $("s1").textContent=tot;$("s2").textContent=Math.round(tot/Math.max(S.items.length*dim,1)*100)+"%";
+ const sum=c[0]+c[1]+c[2],R=40,C=2*Math.PI*R;let a=0,g="";
+ if(sum){c.forEach((v,i)=>{const len=v/sum*C;g+=`<circle r="${R}" cx="60" cy="60" fill="none" stroke="${COL[i]}" stroke-width="16" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-a}" transform="rotate(-90 60 60)"/>`;a+=len})}
+ else g=`<circle r="${R}" cx="60" cy="60" fill="none" stroke="#2a2a2a" stroke-width="16"/>`;
+ $("donut").innerHTML=`<div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap"><svg viewBox="0 0 120 120" width="130">${g}</svg><div>${c.map((v,i)=>`<div style="color:${COL[i]}">● ${L.cat[i]} : ${v}</div>`).join("")}</div></div>`;
+}
+const ML=[31,28,31,30,31,30,31,31,30,31,30,31];
+let S={items:[],checks:{},lang:"fr"};
+try{const s=JSON.parse(localStorage.getItem("succ")||"null");if(s)S=s}catch(e){document.getElementById("warn").style.display="block"}
+const save=()=>{try{localStorage.setItem("succ",JSON.stringify(S))}catch(e){document.getElementById("warn").style.display="block"}const e=document.getElementById("saved");if(e){e.style.opacity=1;setTimeout(()=>e.style.opacity=.5,800)}};
+let wOff=0,mOff=0;
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const key=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+function weekDates(){const n=new Date();const d=new Date(n.getFullYear(),n.getMonth(),n.getDate()+wOff*7);const dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return[...Array(7)].map((_,i)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+i))}
+function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);const y=new Date(Date.UTC(t.getUTCFullYear(),0,1));return Math.ceil(((t-y)/864e5+1)/7)}
+const loc=()=>({fr:"fr-FR",en:"en-US",ar:"ar-MA"}[S.lang]);
+const mname=d=>new Intl.DateTimeFormat(loc(),{month:"long",year:"numeric"}).format(d);
+const dletter=d=>new Intl.DateTimeFormat(loc(),{weekday:"narrow"}).format(d);
+const stars=t=>"*".repeat(t);
+
+function drawPanel(){
+ const L=T[S.lang],p=$("panel");
+ p.innerHTML=`<input id="nm" placeholder="${L.ph}" maxlength="40">`+[1,2,3].map(t=>`<button class="btn opt t${t}" style="animation-delay:${(t-1)*.25}s" data-t="${t}">${L["t"+t]}</button>`).join("");
+ p.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  const t=+b.dataset.t;const nm=$("nm").value.trim()||L.def[t-1]+" "+(S.items.filter(i=>i.t===t).length+1);
+  S.items.push({id:Date.now()+Math.random(),t,nm});$("nm").value="";save();render();$("nm").focus();
+ });
+}
+function toggle(id,k){const kk=id+"|"+k;if(S.checks[kk])delete S.checks[kk];else S.checks[kk]=1;save();render()}
+function del(id){const r=document.querySelector('[data-row="'+id+'"]');const go=()=>{S.items=S.items.filter(i=>i.id!==id);save();render()};if(r){r.classList.add("out");setTimeout(go,350)}else go()}
+
+function lineChart(t,dates){
+ const items=S.items.filter(i=>i.t===t);
+ const vals=dates.map(d=>items.filter(i=>S.checks[i.id+"|"+key(d)]).length);
+ const max=Math.max(items.length,1),W=300,H=170,l=30,b=28,top=12,r=10;
+ const x=i=>l+i*(W-l-r)/6,y=v=>H-b-(v/max)*(H-b-top);
+ const pts=vals.map((v,i)=>x(i)+","+y(v)).join(" ");
+ let g=`<line x1="${l}" y1="${top}" x2="${l}" y2="${H-b}" stroke="#555"/><line x1="${l}" y1="${H-b}" x2="${W-r}" y2="${H-b}" stroke="#555"/>`;
+ g+=`<text x="4" y="${y(max)+4}">${max}</text><text x="4" y="${H-b+4}">0</text>`;
+ g+=dates.map((d,i)=>`<text x="${x(i)}" y="${H-10}" text-anchor="middle">${dletter(d)}</text>`).join("");
+ g+=`<polyline points="${pts}" fill="none" stroke="${COL[t-1]}" stroke-width="2.5" stroke-linejoin="round"/>`;
+ g+=vals.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${COL[t-1]}"/>`).join("");
+ return`<div class="card"><h4>${T[S.lang]["t"+t]}</h4><svg viewBox="0 0 ${W} ${H}" width="100%">${g}</svg></div>`;
+}
+
+function monthChart(){
+ const n=new Date(),d=new Date(n.getFullYear(),n.getMonth()+mOff,1);
+ const y=d.getFullYear(),m=d.getMonth();
+ const leap=(y%4===0&&y%100!==0)||y%400===0;
+ const days=(m===1&&leap)?29:ML[m];
+ const data=[];let max=1;
+ for(let i=1;i<=days;i++){
+  const k=y+"-"+pad(m+1)+"-"+pad(i);
+  const c=[1,2,3].map(t=>S.items.filter(it=>it.t===t&&S.checks[it.id+"|"+k]).length);
+  max=Math.max(max,...c);data.push(c);
+ }
+ const gw=26,l=30,H=200,b=26,top=10,W=l+days*gw+10;
+ const yy=v=>H-b-(v/max)*(H-b-top);
+ let g=`<line x1="${l}" y1="${top}" x2="${l}" y2="${H-b}" stroke="#555"/><line x1="${l}" y1="${H-b}" x2="${W}" y2="${H-b}" stroke="#555"/><text x="4" y="${yy(max)+4}">${max}</text><text x="4" y="${H-b+4}">0</text>`;
+ data.forEach((c,i)=>{
+  const x0=l+i*gw+3;
+  c.forEach((v,j)=>{if(v)g+=`<rect x="${x0+j*7}" y="${yy(v)}" width="6" height="${H-b-yy(v)}" fill="${COL[j]}" rx="1"/>`});
+  g+=`<text x="${x0+10}" y="${H-10}" text-anchor="middle">${i+1}</text>`;
+ });
+ $("mlabel").textContent=mname(d);
+ $("mchart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${g}</svg>`;
+}
+
+function render(){
+ const L=T[S.lang];
+ document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==="ar"?"rtl":"ltr";
+ $("create").textContent="✨ "+L.create;
+ $("streakT").textContent=L.streak+" · "+L.week;
+ $("monthT").textContent=L.month;
+ const dates=weekDates();
+ $("wlabel").textContent=mname(dates[3])+" · "+L.week+" "+isoWeek(dates[0]);
+ const today=key(new Date());
+ $("rows").innerHTML=S.items.length?[1,2,3].map(t=>S.items.filter(i=>i.t===t).length?`<div class="cat-h">${X[S.lang].cat[t-1]}</div>`+S.items.filter(i=>i.t===t).map(it=>`<div class="row" data-row="${it.id}"><div class="lab"><span>${it.nm.replace(/</g,"&lt;")}${streak(it.id)?` <small style="color:var(--gold)">🔥${streak(it.id)}</small>`:""}</span><button data-del="${it.id}" title="×">×</button></div><div class="days">${dates.map(d=>{const k=key(d);return`<button class="d t${it.t} ${S.checks[it.id+"|"+k]?"on":""} ${k===today?"today":""} ${k>today?"fut":""}" ${k>today?"disabled":""} data-id="${it.id}" data-k="${k}">${dletter(d)}</button>`}).join("")}</div></div>`).join(""):"").join(""):`<div class="empty">${L.empty}</div>`;
+ $("rows").querySelectorAll(".d").forEach(b=>b.onclick=()=>toggle(b.dataset.id,b.dataset.k));
+ $("rows").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>del(+b.dataset.del));
+ $("wcharts").innerHTML=[1,2,3].map(t=>lineChart(t,dates)).join("");
+ monthChart();stats();weekSum(dates);
+ drawPanelLabels();
+ document.querySelectorAll(".langs button").forEach(b=>b.classList.toggle("on",b.dataset.l===S.lang));
+}
+function drawPanelLabels(){const L=T[S.lang];document.querySelectorAll("#panel .opt").forEach(b=>b.textContent=L["t"+b.dataset.t]+"  ·  "+S.items.filter(i=>i.t===+b.dataset.t).length);const i=$("nm");if(i)i.placeholder=L.ph}
+
+$("create").onclick=()=>{const p=$("panel");if(p.classList.contains("open")){p.classList.remove("open")}else{drawPanel();drawPanelLabels();p.classList.add("open")}};
+$("prev").onclick=()=>{wOff--;render()};$("next").onclick=()=>{wOff++;render()};
+$("bk").onclick=()=>{const b=$("bkp");b.style.display=b.style.display==="none"?"block":"none"};
+$("bke").onclick=()=>{const t=JSON.stringify(S);$("bkt").value=t;$("bkt").select();try{navigator.clipboard.writeText(t)}catch(e){}};
+$("bki").onclick=()=>{try{const o=JSON.parse($("bkt").value);if(o&&Array.isArray(o.items)&&o.checks){S=o;save();render()}}catch(e){$("bkt").value="⚠️ Invalid JSON"}};
+let armed=0;
+$("reset").onclick=()=>{
+ if(!armed){armed=1;$("reset").textContent=X[S.lang].conf;setTimeout(()=>{armed=0;stats()},4000);return}
+ armed=0;const {p}=monthPrefix();
+ Object.keys(S.checks).forEach(k=>{if(k.split("|")[1].startsWith(p))delete S.checks[k]});
+ save();render();
+};
+$("mprev").onclick=()=>{mOff--;render()};$("mnext").onclick=()=>{mOff++;render()};
+document.querySelectorAll(".langs button").forEach(b=>b.onclick=()=>{S.lang=b.dataset.l;save();render()});
+render();
+</script>
+</body>
+</html>
